@@ -1,3 +1,52 @@
+/* #root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.darkBG {
+  background-color: rgba(0, 0, 0, 0.2);
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+}
+
+.centered {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.modal {
+  width: 350px;
+  height: 200px;
+  background: rgb(16, 16, 16);
+  color: white;
+  z-index: 10;
+  border-radius: 16px;
+  box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.04);
+}
+
+.modal button {
+  margin-top: 10px;
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.modal button:hover {
+  background-color: #0056b3;
+} */
+
+/* Основные стили для приложения */
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -5,38 +54,109 @@
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+/* Затемнённый фон модального окна */
+.darkBG {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.3s ease-in-out;
 }
 
-@keyframes logo-spin {
+/* Контейнер для модального окна */
+.modal {
+  width: 400px;
+  max-width: 90%;
+  background: linear-gradient(145deg, #1e1e1e, #2a2a2a);
+  color: white;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  z-index: 1010;
+  animation: slideIn 0.3s ease-in-out;
+}
+
+.modal__content {
+  padding: 20px;
+}
+
+/* Заголовок модального окна */
+.modal h2 {
+  margin: 0 0 20px;
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+/* Поле ввода */
+.modal input {
+  /* width: 100%; */
+  padding: 12px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  background: #333;
+  color: white;
+  outline: none;
+}
+
+.modal__actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+/* Кнопки */
+.modal button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  /* transition: background 0.3s; */
+  transition: background-color 0.5s ease-in-out 0.2s;
+  font-size: 1rem;
+}
+
+.modal button:hover {
+  background: #0056b3;
+}
+
+/* Кнопка отмены */
+.modal button.cancel {
+  background: #6c757d;
+}
+
+.modal button.cancel:hover {
+  background: #5a6268;
+}
+
+/* Анимация появления */
+@keyframes fadeIn {
   from {
-    transform: rotate(0deg);
+    opacity: 0;
   }
   to {
-    transform: rotate(360deg);
+    opacity: 1;
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+/* Анимация выезда */
+@keyframes slideIn {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
   }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
