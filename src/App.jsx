@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 // import api from './api';
 import { api } from './api';
 import TreeView from './components/TreeView';
+import Modal from './components/Modal/Modal';
 import './App.css';
 
 function App() {
@@ -148,51 +149,21 @@ function App() {
         expandedNodes={expandedNodes}
         toggleNode={toggleNode}
         openModal={openModal}
-        deleteNode={handleDeleteNode}
+        deleteNode={(nodeId) => openModal('delete', nodeId)}
       />
-      {modal.isOpen && (
-        <div className="darkBG">
-          <div className="centered">
-            <div className="modal">
-              <div className="modal__content">
-                <h2>
-                  {modal.type === 'create'
-                    ? 'Add Node'
-                    : modal.type === 'edit'
-                    ? 'Edit Node'
-                    : 'Delete Node'}
-                </h2>
-                {modal.type !== 'delete' && (
-                  <input
-                    type="text"
-                    value={nodeName}
-                    onChange={(e) => setNodeName(e.target.value)}
-                    placeholder="Node Name"
-                  />
-                )}
-                <div className="modal__actions">
-                  <button onClick={closeModal}>Cancel</button>
-                  {modal.type === 'create' && (
-                    <button onClick={() => handleCreateNode(modal.nodeId)}>
-                      Save
-                    </button>
-                  )}
-                  {modal.type === 'edit' && (
-                    <button onClick={() => handleEditNode(modal.nodeId)}>
-                      Save
-                    </button>
-                  )}
-                  {modal.type === 'delete' && (
-                    <button onClick={() => handleDeleteNode(modal.nodeId)}>
-                      Delete
-                    </button>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      <Modal
+        isOpen={modal.isOpen}
+        type={modal.type}
+        nodeName={nodeName}
+        onClose={closeModal}
+        onChange={setNodeName}
+        onSave={() =>
+          modal.type === 'create'
+            ? handleCreateNode(modal.nodeId)
+            : handleEditNode(modal.nodeId)
+        }
+        onDelete={() => handleDeleteNode(modal.nodeId)}
+      />
     </div>
   );
 }
