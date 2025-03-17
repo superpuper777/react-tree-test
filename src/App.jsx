@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 // import api from './api';
 import { api } from './api';
+import TreeView from './components/TreeView';
 import './App.css';
 
 function App() {
@@ -11,6 +12,7 @@ function App() {
   const [error, setError] = useState(null);
   const [modal, setModal] = useState({ isOpen: false, type: '', nodeId: null });
   const [nodeName, setNodeName] = useState('');
+  const [expandedNodes, setExpandedNodes] = useState({});
 
   const openModal = (type, nodeId = null) => {
     if (type === 'edit' && nodeId) {
@@ -119,6 +121,13 @@ function App() {
     }
   };
 
+  const toggleNode = (nodeId) => {
+    setExpandedNodes((prev) => ({
+      ...prev,
+      [nodeId]: !prev[nodeId],
+    }));
+  };
+
   useEffect(() => {
     loadTree();
   }, []);
@@ -131,23 +140,16 @@ function App() {
     return <div>{error}</div>;
   }
 
-  const renderTree = (node) => (
-    <div key={node.id} className="tree-node">
-      <span>{node.name}</span>
-      <button onClick={() => openModal('create', node.id)}>➕</button>
-      <button onClick={() => openModal('edit', node.id)}>✏️</button>
-      <button onClick={() => openModal('delete', node.id)}>🗑️</button>
-      {node.children?.length > 0 && (
-        <div className="children">{node.children.map(renderTree)}</div>
-      )}
-    </div>
-  );
-
   return (
     <div className="app">
-      <h1>Tree: {treeName}</h1>
-      {treeData ? renderTree(treeData) : <p>Tree is empty</p>}
-
+      <h2>Tree View</h2>
+      <TreeView
+        treeData={treeData}
+        expandedNodes={expandedNodes}
+        toggleNode={toggleNode}
+        openModal={openModal}
+        deleteNode={handleDeleteNode}
+      />
       {modal.isOpen && (
         <div className="darkBG">
           <div className="centered">

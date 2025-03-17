@@ -1,0 +1,36 @@
+.tree-container {
+  padding: 16px;
+  font-family: Arial, sans-serif;
+}
+
+.tree-node {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 8px;
+}
+
+.node-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.node-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.tree-children {
+  margin-top: 8px;
+  margin-left: 24px;
+}
+
+.node-actions button {
+  padding: 4px 8px;
+  cursor: pointer;
+}
+
+.tree-node.root {
+  margin-top: 0;
+}
