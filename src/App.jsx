@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 // import api from './api';
 import { api } from './api';
 import TreeView from './components/TreeView';
 import Modal from './components/Modal/Modal';
 import './App.css';
+import { generateTreeName, findNodeById } from './helpers';
 
 function App() {
   const [treeData, setTreeData] = useState(null);
@@ -28,12 +28,6 @@ function App() {
   const closeModal = () => {
     setModal({ isOpen: false, type: '', nodeId: null });
     setNodeName('');
-  };
-
-  const generateTreeName = () => {
-    const newTreeName = uuidv4();
-    localStorage.setItem('treeName', newTreeName);
-    return newTreeName;
   };
 
   const loadTree = async () => {
@@ -74,21 +68,6 @@ function App() {
     } catch (error) {
       console.error('Error updating node:', error);
     }
-  };
-
-  const findNodeById = (nodes, id) => {
-    for (let node of nodes) {
-      if (node.id === id) {
-        return node;
-      }
-      if (node.children && node.children.length > 0) {
-        const foundNode = findNodeById(node.children, id);
-        if (foundNode) {
-          return foundNode;
-        }
-      }
-    }
-    return null;
   };
 
   const deleteNodeRecursively = async (node) => {
